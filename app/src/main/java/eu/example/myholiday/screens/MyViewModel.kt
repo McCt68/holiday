@@ -57,10 +57,9 @@ class MyViewModel() : ViewModel() {
 	@Composable
 	fun CreateFirebaseDocument(){
 		val myFirestoreInstance = storedData()
-		// myFirestoreInstance.CreateNewCollection()
+		myFirestoreInstance.CreateNewCollection() // create new collection
 
-
-		myFirestoreInstance.updateData("Bettine", savings = 30000)
+		myFirestoreInstance.updateData("Bettine", savings = 30000) // update collection
 	}
 	// Use update method from repository to update a field in the database document tester
 	@Composable

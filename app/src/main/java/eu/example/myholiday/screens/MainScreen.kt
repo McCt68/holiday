@@ -15,6 +15,9 @@ import eu.example.myholiday.ShowTotalSavings
 import eu.example.myholiday.ShowTotalSavingsFromFirestore
 
 
+// I think its more correct to create a viewModel object i can reference to -
+// rather than having the MainScreen inherit from viewModel ??
+
 //
 @Composable
 fun MainScreen(myViewModel: MyViewModel) {
@@ -107,7 +110,7 @@ fun MainScreen(myViewModel: MyViewModel) {
 
 		// FIRESTORE TESTING
 		// Create a firebaseFirestore document - Comment his out, to not have it create a document each time i run
-		//myViewModel.CreateFirebaseDocument()
+		// myViewModel.CreateFirebaseDocument()
 
 		// Update firestore test
 		myViewModel.UpdateFireStoreData("bent", 850)
