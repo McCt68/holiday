@@ -94,6 +94,9 @@ fun MainScreen(myViewModel: MyViewModel) {
 					.fillMaxWidth()
 					.height(8.dp)
 			)
+
+			// This does not show the value of name. it just shows Unit
+			Text(text = myViewModel.readField().toString())
 			
 			// Here should be a composable that can show data from firestore -
 			// it should show collection users - document holidaySavings - fields name, and savings
@@ -113,6 +116,7 @@ fun MainScreen(myViewModel: MyViewModel) {
 		myViewModel.UpdateFireStoreData("bent", 850)
 
 		myViewModel.ReadTest()
+
 
 	}
 }

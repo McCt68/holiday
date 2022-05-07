@@ -73,13 +73,18 @@ class storedData() {
 	}
 
 	// Another way to transform firestore data to kotlin ??
-	fun transformFireStoreToKotlin(){
+	fun transformFireStoreToKotlin(): String{
+		var toReturn: String = ""
 		val docRef = db.collection("users").document("holidaySavings")
 		docRef.get().addOnSuccessListener { documentSnapshot ->
+			var sendStringBack = documentSnapshot.get("name")
+			toReturn = documentSnapshot.get("name").toString()
 			// need to understand this better ??
 			// val city = documentSnapshot.toObject<City>()
 			// val city = documentSnapshot.
+
 		}
+		return toReturn
 	}
 
 
