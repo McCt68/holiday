@@ -85,13 +85,10 @@ class MyViewModel() : ViewModel() {
 		myFirestoreInstance.readDataTest()
 	}
 
-	// ReadFireStore Field test
+	// USE THE FINALREAD TEST
 	@Composable
-	fun readField(){
+	fun FinalReadTest() {
 		val myFirestoreInstance = storedData()
-		myFirestoreInstance.transformFireStoreToKotlin()
+		myFirestoreInstance.readDataTestFinal()
 	}
-
-
-
 }

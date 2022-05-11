@@ -4,6 +4,9 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.Composable
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class storedData() {
 
@@ -72,20 +75,46 @@ class storedData() {
 			}
 	}
 
-	// Another way to transform firestore data to kotlin ??
-	fun transformFireStoreToKotlin(): String{
-		var toReturn: String = ""
+	fun readDataTestFinal(): String{
 		val docRef = db.collection("users").document("holidaySavings")
-		docRef.get().addOnSuccessListener { documentSnapshot ->
-			var sendStringBack = documentSnapshot.get("name")
-			toReturn = documentSnapshot.get("name").toString()
-			// need to understand this better ??
-			// val city = documentSnapshot.toObject<City>()
-			// val city = documentSnapshot.
+		var returnTest = ""
+		docRef.get()
+			.addOnSuccessListener { document ->
+				if (document != null) {
+					Log.d("Rtest", "DocumentSnapshot data: ${document.data}")
 
-		}
-		return toReturn
+					// I want to return this so i can use it in a composable text view
+					returnTest = document.get("name").toString()
+				} else {
+					Log.d("Rtest", "No such document")
+				}
+			}
+			.addOnFailureListener {  exception ->
+				Log.d("Rfail", "get failed with ", exception)
+			}
+		return returnTest
 	}
 
-
+	// Answer from stackoverflow
+	/*
+	The Firebase call is async, which means it will not return the data immediately.
+	This is why the API uses a callback. Therefore, your function readDataTestFinal is always returning an empty string.
+	One solution you can use is transform your function in a suspend function and call it using a coroutine scope.
+	*/
+	suspend fun readDataFromFireStoreFieldName(): String {
+		val docRef = db.collection("users").document("holidaySavings")
+		return suspendCoroutine { continuation ->
+			docRef.get()
+				.addOnSuccessListener { document ->
+					if (document != null) {
+						continuation.resume(document.get("name").toString())
+					} else {
+						continuation.resume("No such document")
+					}
+				}
+				.addOnFailureListener { exception ->
+					continuation.resumeWithException(exception)
+				}
+		}
+	}
 }

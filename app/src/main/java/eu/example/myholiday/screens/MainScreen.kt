@@ -3,8 +3,7 @@ package eu.example.myholiday.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -12,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.example.myholiday.MyTextField
 import eu.example.myholiday.ShowTotalSavings
-import eu.example.myholiday.ShowTotalSavingsFromFirestore
+import eu.example.myholiday.model.storedData
 
 
 //
@@ -25,6 +24,7 @@ fun MainScreen(myViewModel: MyViewModel) {
 			verticalArrangement = Arrangement.spacedBy(16.dp),
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
+
 			ShowTotalSavings(myViewModel.calculatedSum.toString())
 
 			Divider(
@@ -95,17 +95,18 @@ fun MainScreen(myViewModel: MyViewModel) {
 					.height(8.dp)
 			)
 
-			// This does not show the value of name. it just shows Unit
-			Text(text = myViewModel.readField().toString())
-			
-			// Here should be a composable that can show data from firestore -
-			// it should show collection users - document holidaySavings - fields name, and savings
-			// it should get these values from observing the viewModel, and show them in a Text composable
-//			ShowTotalSavingsFromFirestore(totalSaved = "5000", myViewModel.UpdateFireStoreData(
-//				name = "Hans",
-//				savings = 95000
-//			))
-			
+
+			// Read the data from firestore collection users - document holidaySavings - Field name
+			// From Stackoverflow answer
+			var newStringFromStoredData by remember {
+				mutableStateOf("")
+			}
+			Text(newStringFromStoredData)
+
+			LaunchedEffect(newStringFromStoredData) {
+				newStringFromStoredData =
+					try { storedData().readDataFromFireStoreFieldName() } catch(e: Exception) { "Error!" }
+			}
 		}
 
 		// FIRESTORE TESTING
@@ -113,9 +114,8 @@ fun MainScreen(myViewModel: MyViewModel) {
 		//myViewModel.CreateFirebaseDocument()
 
 		// Update firestore test
-		myViewModel.UpdateFireStoreData("bent", 850)
+		myViewModel.UpdateFireStoreData("Knud", 850)
 
-		myViewModel.ReadTest()
 
 
 	}
