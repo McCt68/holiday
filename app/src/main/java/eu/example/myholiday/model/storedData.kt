@@ -45,19 +45,7 @@ class storedData() {
 
 	}
 
-	// Read data from Firestore
-	fun readFirestoreData(){
-		db.collection("users")
-			.get()
-			.addOnSuccessListener { result ->
-				for (document in result) {
-					Log.d("read", "${document.id} => ${document.data}")
-				}
-			}
-			.addOnFailureListener { exception ->
-				Log.w("read", "Error getting documents.", exception)
-			}
-	}
+
 
 	// READ DATA TEST
 	fun readDataTest(){
@@ -75,27 +63,7 @@ class storedData() {
 			}
 	}
 
-	fun readDataTestFinal(): String{
-		val docRef = db.collection("users").document("holidaySavings")
-		var returnTest = ""
-		docRef.get()
-			.addOnSuccessListener { document ->
-				if (document != null) {
-					Log.d("Rtest", "DocumentSnapshot data: ${document.data}")
-
-					// I want to return this so i can use it in a composable text view
-					returnTest = document.get("name").toString()
-				} else {
-					Log.d("Rtest", "No such document")
-				}
-			}
-			.addOnFailureListener {  exception ->
-				Log.d("Rfail", "get failed with ", exception)
-			}
-		return returnTest
-	}
-
-	// Answer from stackoverflow
+	// Read Data - Answer from stackoverflow
 	/*
 	The Firebase call is async, which means it will not return the data immediately.
 	This is why the API uses a callback. Therefore, your function readDataTestFinal is always returning an empty string.

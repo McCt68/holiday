@@ -70,25 +70,10 @@ class MyViewModel() : ViewModel() {
 
 	}
 
-	// Use the readfireStoreData from repository
-	@Composable
-	fun ReadFireStoreDataFromRepository() {
-		val myFirestoreInstance = storedData()
-		myFirestoreInstance.readFirestoreData()
-
-	}
-
 	// USE THE READ TEST
 	@Composable
 	fun ReadTest() {
 		val myFirestoreInstance = storedData()
 		myFirestoreInstance.readDataTest()
-	}
-
-	// USE THE FINALREAD TEST
-	@Composable
-	fun FinalReadTest() {
-		val myFirestoreInstance = storedData()
-		myFirestoreInstance.readDataTestFinal()
 	}
 }
