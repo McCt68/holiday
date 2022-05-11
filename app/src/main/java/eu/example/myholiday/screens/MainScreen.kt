@@ -63,13 +63,10 @@ fun MainScreen(myViewModel: MyViewModel) {
 					Text(text = "tilføj beløb")
 
 				}
-				Button(onClick = { updateData.value = true }) {
-					Text(text = "Update firestore name field")
-					if (updateData.value) {
-						myViewModel.UpdateFireStoreData(valueFromField, 850)
-					}
-				}
 
+				Button(onClick = { myViewModel.clearTotal() }) {
+					Text(text = "Clear All")
+				}
 
 			}
 			Divider(
@@ -78,11 +75,12 @@ fun MainScreen(myViewModel: MyViewModel) {
 					.height(8.dp)
 			)
 
-			Button(onClick = { myViewModel.clearTotal() }) {
-				Text(text = "Clear All")
-
+			Button(onClick = { updateData.value = true }) {
+				Text(text = "Update firestore name field")
+				if (updateData.value) {
+					myViewModel.UpdateFireStoreData(valueFromField, 850)
+				}
 			}
-
 			Divider(
 				modifier = Modifier
 					.fillMaxWidth()
@@ -90,7 +88,7 @@ fun MainScreen(myViewModel: MyViewModel) {
 			)
 
 			// With StateFlow - Here I collect the flow from the viewModel
-			var collectedFlow = myViewModel.name.collectAsState()
+			val collectedFlow = myViewModel.name.collectAsState()
 			MyTextField(
 				label = "Name from viewModel",
 				// value = myViewModel.name.value,
@@ -101,9 +99,6 @@ fun MainScreen(myViewModel: MyViewModel) {
 				myViewModel.updateFieldName = newText
 				valueFromField = newText
 				}
-
-
-
 			)
 
 			Divider(
@@ -118,16 +113,7 @@ fun MainScreen(myViewModel: MyViewModel) {
 				mutableStateOf("")
 			}
 			Text(myViewModel.getUpdatedFieldName)
-
-
-
-
 		}
-
-
-		// Update firestore test
-		// I need to create a TextField where i can enter name and savings and have it update firestore document
-
 
 		// FIRESTORE TESTING
 		// Create a firebaseFirestore document - Comment his out, to not have it create a document each time i run
