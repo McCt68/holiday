@@ -8,14 +8,13 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class storedData() {
+class Repository() {
 
 	val db = FirebaseFirestore.getInstance()
 
 	// Create a collection in firestore
 	@Composable
 	fun CreateNewCollection(){
-
 		val db = FirebaseFirestore.getInstance()
 
 		// Pass data onto the firestore db, it must be of type hashmap
@@ -71,7 +70,7 @@ class storedData() {
 	*/
 	suspend fun readDataFromFireStoreFieldName(): String {
 		val docRef = db.collection("users").document("holidaySavings")
-		return suspendCoroutine { continuation ->
+		val documentName: String = suspendCoroutine { continuation ->
 			docRef.get()
 				.addOnSuccessListener { document ->
 					if (document != null) {
@@ -84,5 +83,7 @@ class storedData() {
 					continuation.resumeWithException(exception)
 				}
 		}
+		return documentName
 	}
+
 }

@@ -10,7 +10,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import eu.example.myholiday.model.storedData
 import eu.example.myholiday.screens.MainScreen
 import eu.example.myholiday.screens.MyViewModel
 import eu.example.myholiday.ui.theme.MyHolidayTheme
